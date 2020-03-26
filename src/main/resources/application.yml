@@ -1,0 +1,8 @@
+server:
+  port: 11111
+
+backend:
+  url: http://localhost:8888/api/result
+#model value can be : true of flase
+judge:
+  local: true
