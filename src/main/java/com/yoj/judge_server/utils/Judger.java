@@ -109,14 +109,16 @@ public class Judger {
         switch (compilerId) {
             case 0:
 //                cmd = "gcc " + path + "/main.c -o " + path + "/main";
-                cmd = "gcc " + path + "/main.c -O2 -Wl,--stack=268435456 -DONLINE_JUDGE -o " + path + "/main";
+                cmd = "gcc " + path + "/main.c -fno-asm -Wall -lm --static -std=c99 -DONLINE_JUDGE -o " + path + "/main";
+//                gcc test.c   -fno-asm -Wall -lm --static -std=c99 -DONLINE_JUDGE -o main
                 break;
             case 1:
 //                cmd = "g++ " + path + "/main.cpp -o " + path + "/main";
                 cmd = "g++ " + path + "/main.cpp  -fno-asm -Wall -lm --static -std=c++11 -DONLINE_JUDGE -o " + path + "/main";
                 break;
             case 2:
-                cmd = "javac " + path + "/Main.java";
+                cmd = "javac -J-Xms32m -J-Xmx256m " + path + "/Main.java";
+//                javac -J-Xms32m -J-Xmx256m Main.java
                 break;
             case 3:
                 cmd = "python3 -m py_compile " + path + "/main.py";
@@ -151,7 +153,7 @@ public class Judger {
         if (exec.getError() != null) {
             solution.setErrorMessage(exec.getError());
             solution.setResult(JudgeResult.WAIT_REJUDGE.ordinal());
-            log.error("=====error====" + solution.getSolutionId() + exec.getStdout() + "    :" + exec.getError());
+            log.error("=====error====" + exec.getStdout() + "    :" + exec.getError());
         } else {
             try {
                 log.info("=====stdout====" + exec.getStdout());
